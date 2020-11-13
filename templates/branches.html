@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>QueueManagmentSystem</title>
+        <link rel="stylesheet" href="../static/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+        <script src="/static/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <img src="static/images/logo.jpg" alt="Ethio Telecom">
+        <br>
+        <hr>
+        <h1> Branches</h1>
+
+        {% for post in branches %}
+            <h2>{{post.branch_id}}</h2>
+            <h2>{{post.area}}</h2>
+        {%endfor%}
+        
+
+    </body>
+</html>
