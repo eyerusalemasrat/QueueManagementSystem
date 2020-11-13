@@ -1,24 +1,21 @@
 import datetime
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-import sys
-sys.path.insert(1, '../controllers')
-from mixin import ModelMixin
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/queue_mangement_system'
-db = SQLAlchemy(app) 
-class Token(ModelMixin, db.Model):
-    __tablename__ = 'token.token'
+import model_config
+db = model_config.db
+from departments import Departments
+from streams import Streams
+from counters import Counters
+dept = Departments
+streams = Streams
+counters = Counters
+class Tokens(db.Model):
+    __tablename__ = 'tokens'
     id = db.Column(db.Integer, primary_key=True)
-    #token_day_number = db.Column(db.String(10), )
+    token_day_number = db.Column(db.String(10), nullable=False)
     phone_number = db.Column(db.String(20), nullable=False)
     date = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    '''department = db.relationship(
-        'Departments', backref="name", lazy="select", 
-    )
-    streams = db.relationship(
-        'Streams', backref="name", lazy="select", 
-    )'''
+    state = db.Column(db.String(10), default='waiting')
+    department = db.Column(db.Integer, db.ForeignKey(dept.id))
+    stream = db.Column(db.Integer, db.ForeignKey(streams.id))
+    processed_by = db.Column(db.Integer, db.ForeignKey(counters.id))
     def __repr__(self):
         return '<Token %r>' % self.phone_number
-    
