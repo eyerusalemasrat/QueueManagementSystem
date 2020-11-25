@@ -5,9 +5,22 @@
     <meta charset="UTF-8">
     <title>QueueManagmentSystem</title>
     
-    <link rel="stylesheet" href="../static/bootstrap-4.5.3-dist/css/bootstrap.min.css">
-    <script src="../static/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="../bootstrap-4.5.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bootstrap-4.5.3-dist/css/bootstrap.min.css">
+    <script src="/static/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+    <script src="../static/javascript/jquery-master/src/jquery.js"></script>
+    <script type=text/javascript>
+        $(function() {
+          $('a#generate_token').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON('/generate_token',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
 
 </head>
 
@@ -33,20 +46,22 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Type</label>
-                            <select for="type" name="type" class="form-control" id="exampleFormControlSelect1">
-                                <option for="type" name="type">Residential</option>
-                                <option for="type" name="type">Enterprise</option>
+                            <label for="exampleFormControlSelect1">Departments</label>
+                            <select for="departments" name="departments" class="form-control" id="department">
+                                {%for department in departments%}
+                                    <option for="departments" name="departments" value="{{department.id}}">{{department.name}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Sub type</label>
-                            <select for="sub_type" name="sub_type" class="form-control" id="exampleFormControlSelect1">
-                                <option for="sub_type" name="sub_type">Sim Card</option>
-                                <option for="sub_type" name="sub_type">Bill Payment</option>
+                            <label for="exampleFormControlSelect1">Streams</label>
+                            <select for="streams" name="streams" class="form-control" id="stream">
+                                {% for stream in streams %}
+                                    <option for="streams" name="streams" value="{{stream.id}}">{{stream.name}}</option>
+                                {% endfor %}
                             </select>
                         </div>
-                        <input type="submit" value="Generate Token">
+                        <input type="submit" id="generate_token" value="Generate Token">
                     </form>
                 </div>
 
